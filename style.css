@@ -345,6 +345,7 @@ body {
   padding: 0;
   overflow: auto;
   background-color: #ffffff;
+  overflow-y: hidden;
 }
 
 .file-explorer-content {
