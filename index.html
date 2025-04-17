@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 11 Simulation</title>
+    <title>Windows 11 Simulation Enhanced</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
@@ -11,20 +11,24 @@
 </head>
 <body>
 
+    <div id="loading-indicator"></div>
+    <div id="snap-hint"></div> <!-- For window snapping visual cue -->
+
     <div id="desktop">
         <!-- Desktop Icons -->
-        <div class="desktop-icon" id="my-computer-icon" title="This PC" data-icon-url="https://img.icons8.com/color/48/windows-11.png">
+        <div class="desktop-icon" id="my-computer-icon" title="This PC" data-icon-url="https://img.icons8.com/?size=100&id=gXoJoyTtYXFg&format=png&color=000000" draggable="true">
              <img src="https://img.icons8.com/?size=100&id=gXoJoyTtYXFg&format=png&color=000000" alt="This PC">
             <span>This PC</span>
         </div>
-        <div class="desktop-icon" id="recycle-bin-icon" title="Recycle Bin" data-icon-url="https://img.icons8.com/color/48/recycle-bin.png">
+        <div class="desktop-icon" id="recycle-bin-icon" title="Recycle Bin" data-icon-url="https://img.icons8.com/color/48/recycle-bin.png" draggable="true">
              <img src="https://img.icons8.com/color/48/recycle-bin.png" alt="Recycle Bin">
             <span>Recycle Bin</span>
         </div>
-         <div class="desktop-icon" id="notepad-icon" title="Notepad" data-icon-url="https://img.icons8.com/fluency/48/notepad.png">
+         <div class="desktop-icon" id="notepad-icon" title="Notepad" data-icon-url="https://img.icons8.com/fluency/48/notepad.png" draggable="true">
              <img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad">
             <span>Notepad</span>
         </div>
+        <!-- Dynamically added icons here -->
 
         <!-- Container for Windows -->
         <div id="window-container">
@@ -36,7 +40,7 @@
     <div id="start-menu">
         <div class="start-search-box">
             <i class="fa-solid fa-search"></i>
-            <input type="text" placeholder="Search for apps, settings, and documents">
+            <input type="text" id="start-search-input" placeholder="Search for apps, settings, and documents">
         </div>
         <div class="start-section pinned-section">
             <div class="start-section-header">
@@ -44,14 +48,15 @@
                 <button class="all-apps-button">All apps <i class="fa-solid fa-chevron-right"></i></button>
             </div>
             <div class="start-app-grid">
-                <div class="start-app-icon" title="Edge"><img src="https://img.icons8.com/color/48/000000/ms-edge.png" alt="Edge"/><span>Edge</span></div>
-                 <div class="start-app-icon" title="Word"><img src="https://img.icons8.com/color/48/000000/ms-word.png" alt="Word"/><span>Word</span></div>
-                <div class="start-app-icon" title="Excel"><img src="https://img.icons8.com/color/48/000000/ms-excel.png" alt="Excel"/><span>Excel</span></div>
-                <div class="start-app-icon" title="PowerPoint"><img src="https://img.icons8.com/color/48/000000/ms-powerpoint.png" alt="PowerPoint"/><span>PowerPoint</span></div>
-                 <div class="start-app-icon" title="Settings"><img src="https://img.icons8.com/fluency/48/settings.png" alt="Settings"/><span>Settings</span></div>
-                 <div class="start-app-icon" title="OneNote"><img src="https://img.icons8.com/?size=100&id=117560&format=png&color=000000" alt="OneNote"/><span>OneNote</span></div>
-                 <div class="start-app-icon" title="File Explorer"><img src="https://img.icons8.com/color/48/folder-invoices--v1.png" alt="File Explorer"/><span>File Explorer</span></div>
-                 <div class="start-app-icon" title="Notepad"><img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad"/><span>Notepad</span></div>
+                <!-- Add data-app-id for potential launching -->
+                <div class="start-app-icon" title="Edge" data-app-id="edge"><img src="https://img.icons8.com/color/48/000000/ms-edge.png" alt="Edge"/><span>Edge</span></div>
+                <div class="start-app-icon" title="Word" data-app-id="word"><img src="https://img.icons8.com/color/48/000000/ms-word.png" alt="Word"/><span>Word</span></div>
+                <div class="start-app-icon" title="Excel" data-app-id="excel"><img src="https://img.icons8.com/color/48/000000/ms-excel.png" alt="Excel"/><span>Excel</span></div>
+                <div class="start-app-icon" title="PowerPoint" data-app-id="powerpoint"><img src="https://img.icons8.com/color/48/000000/ms-powerpoint.png" alt="PowerPoint"/><span>PowerPoint</span></div>
+                <div class="start-app-icon" title="Settings" data-app-id="settings"><img src="https://img.icons8.com/fluency/48/settings.png" alt="Settings"/><span>Settings</span></div>
+                <div class="start-app-icon" title="Calculator" data-app-id="calculator"><img src="https://img.icons8.com/fluency/48/calculator.png" alt="Calculator"/><span>Calculator</span></div>
+                <div class="start-app-icon" title="File Explorer" data-app-id="my-computer"><img src="https://img.icons8.com/color/48/folder-invoices--v1.png" alt="File Explorer"/><span>File Explorer</span></div>
+                <div class="start-app-icon" title="Notepad" data-app-id="notepad"><img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad"/><span>Notepad</span></div>
             </div>
         </div>
          <div class="start-section recommended-section">
@@ -84,6 +89,38 @@
          </div>
     </div>
 
+    <!-- Widgets Panel -->
+    <div id="widgets-panel">
+        <div class="widget">
+            <h4>Clock</h4>
+            <div id="widget-clock" style="font-size: 2em; text-align:center; margin: 10px 0;"></div>
+        </div>
+         <div class="widget">
+            <h4>Weather (Placeholder)</h4>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                 <i class="fa-solid fa-cloud-sun" style="font-size: 2em;"></i>
+                 <span>Sunny, 25°C</span>
+            </div>
+        </div>
+        <div class="widget">
+            <h4>News (Placeholder)</h4>
+            <ul>
+                <li>Breaking News</li>
+                <li>Important Update</li>
+                <li>Headline</li>
+            </ul>
+        </div>
+    </div>
+
+     <!-- Task View Overlay -->
+    <div id="task-view">
+        <div id="task-view-grid">
+            <!-- Task view thumbnails added here -->
+        </div>
+         <button id="close-task-view" title="Close Task View"><i class="fa-solid fa-times"></i></button>
+    </div>
+
+
     <!-- Taskbar -->
     <div id="taskbar">
         <div class="taskbar-center">
@@ -92,7 +129,8 @@
                  <div class="taskbar-icon" id="search-button" title="Search"><i class="fa-solid fa-search"></i></div>
                  <div class="taskbar-icon" id="taskview-button" title="Task View"><i class="fa-regular fa-object-group"></i></div>
                  <div class="taskbar-icon" id="widgets-button" title="Widgets"><i class="fa-solid fa-table-cells-large"></i></div>
-                 <div class="taskbar-icon active" id="explorer-button" title="File Explorer"><img src="https://img.icons8.com/color/20/folder-invoices--v1.png" alt="Explorer"/></div>
+                 <div class="taskbar-icon" id="explorer-button" title="File Explorer"><img src="https://img.icons8.com/color/20/folder-invoices--v1.png" alt="Explorer"/></div>
+                 <!-- Active app icons might be added here too if desired -->
             </div>
             <div id="minimized-windows">
                 <!-- Minimized buttons go here -->
@@ -134,43 +172,65 @@
     <!-- Custom Context Menu -->
     <div id="context-menu" role="menu">
         <ul>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item has-submenu" data-action="view">
                 <i class="fa-solid fa-table-cells-large"></i><span class="label">View</span>
                 <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+                <ul class="context-submenu">
+                    <li><i class="fa-solid fa-icons"></i> Large icons</li>
+                    <li><i class="fa-regular fa-square"></i> Medium icons</li>
+                    <li><i class="fa-solid fa-list"></i> List</li>
+                    <li><i class="fa-solid fa-grip-lines"></i> Details</li>
+                </ul>
             </li>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item has-submenu" data-action="sortby">
                 <i class="fa-solid fa-arrow-up-wide-short"></i><span class="label">Sort by</span>
                 <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+                 <ul class="context-submenu">
+                    <li><i class="fa-solid fa-signature"></i> Name</li>
+                    <li><i class="fa-solid fa-database"></i> Size</li>
+                    <li><i class="fa-solid fa-calendar-days"></i> Date modified</li>
+                 </ul>
             </li>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item" data-action="refresh">
                 <i class="fa-solid fa-rotate-right"></i><span class="label">Refresh</span>
             </li>
             <li class="context-menu-separator" role="separator"></li>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item disabled" data-action="undo"> <!-- Example: Disabled state -->
                 <i class="fa-solid fa-rotate-left"></i><span class="label">Undo Rename</span>
                 <span class="shortcut">Ctrl+Z</span>
             </li>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item has-submenu" data-action="new">
                <i class="fa-regular fa-square-plus"></i><span class="label">New</span>
                <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+                <ul class="context-submenu">
+                    <li data-sub-action="new-folder"><i class="fa-regular fa-folder"></i> Folder</li>
+                    <li data-sub-action="new-shortcut"><i class="fa-solid fa-rocket"></i> Shortcut</li>
+                    <li class="context-menu-separator" role="separator"></li>
+                    <li data-sub-action="new-text"><i class="fa-regular fa-file-lines"></i> Text Document</li>
+                    <li data-sub-action="new-zip"><i class="fa-solid fa-file-zipper"></i> Compressed (zipped) Folder</li>
+                </ul>
             </li>
              <li class="context-menu-separator" role="separator"></li>
-             <li class="context-menu-item" role="menuitem">
+             <li class="context-menu-item" data-action="display-settings">
                 <i class="fa-solid fa-display"></i><span class="label">Display settings</span>
             </li>
-             <li class="context-menu-item" role="menuitem">
+             <li class="context-menu-item" data-action="personalize">
                 <i class="fa-solid fa-paintbrush"></i><span class="label">Personalize</span>
             </li>
+             <li class="context-menu-item" data-action="change-background"> <!-- Added -->
+                <i class="fa-regular fa-image"></i><span class="label">Change background</span>
+            </li>
              <li class="context-menu-separator" role="separator"></li>
-            <li class="context-menu-item" role="menuitem">
+            <li class="context-menu-item" data-action="open-terminal">
                 <i class="fa-solid fa-terminal"></i><span class="label">Open in Terminal</span>
             </li>
              <li class="context-menu-separator" role="separator"></li>
-             <li class="context-menu-item" role="menuitem">
+             <li class="context-menu-item" data-action="show-more">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i><span class="label">Show more options</span>
             </li>
         </ul>
     </div>
+
 
     <script src="script.js"></script>
 </body>
