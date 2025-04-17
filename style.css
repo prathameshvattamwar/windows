@@ -176,6 +176,7 @@ body {
   font-size: 12px;
   height: 100%;
   padding-right: 5px;
+  /* margin-left: auto;  */
 }
 .taskbar-right .taskbar-icon {
   font-size: 15px;
@@ -257,7 +258,7 @@ body {
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: 100vh !important;
+  height: calc(100vh - 48px) !important; /* Corrected maximized height */
   border-radius: 0;
   border: none;
   resize: none;
@@ -608,7 +609,7 @@ body {
 #tray-flyout {
   position: absolute;
   bottom: 55px;
-  right: 145px;
+  right: 145px; 
   width: auto;
   min-width: 200px;
   padding: 10px;
@@ -666,4 +667,87 @@ body {
   font-size: 14px;
   line-height: 1.4;
   resize: none;
+}
+
+#context-menu {
+  position: absolute;
+  z-index: 2000;
+  width: 280px;
+  background-color: rgba(249, 249, 249, 0.85);
+  backdrop-filter: blur(25px) saturate(1.5);
+  -webkit-backdrop-filter: blur(25px) saturate(1.5);
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  padding: 6px;
+  display: none;
+  user-select: none;
+  border: 1px solid rgba(180, 180, 180, 0.4);
+}
+
+#context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 7px 12px;
+  margin: 1px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #222;
+  transition: background-color 0.1s ease-in-out;
+  white-space: nowrap;
+}
+
+.context-menu-item:hover {
+  background-color: rgba(0, 0, 0, 0.07);
+}
+.context-menu-item:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.context-menu-item i:first-child {
+  width: 28px;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1;
+}
+
+.context-menu-item .label {
+  flex-grow: 1;
+}
+
+.context-menu-item .shortcut {
+  margin-left: auto;
+  font-size: 11px;
+  color: #555;
+  padding-left: 20px;
+}
+
+.context-menu-item .submenu-arrow {
+  margin-left: auto;
+  font-size: 9px;
+  color: #444;
+  padding-left: 15px;
+}
+
+.context-menu-separator {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+  margin: 5px 0px;
+}
+
+.context-menu-item:nth-child(3) .submenu-arrow,
+.context-menu-item:nth-child(5) .submenu-arrow,
+.context-menu-item:nth-child(8) .submenu-arrow,
+.context-menu-item:nth-child(9) .submenu-arrow,
+.context-menu-item:nth-child(11) .submenu-arrow,
+.context-menu-item:nth-child(13) .submenu-arrow {
+  visibility: hidden;
 }
