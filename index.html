@@ -5,19 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 11 Simulation</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Segoe UI font -->
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Placeholder Icon URLs (Replace with better/local ones if needed) -->
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Windows_11_logo.svg/48px-Windows_11_logo.svg.png"> <!-- Favicon -->
-
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Windows_11_logo.svg/48px-Windows_11_logo.svg.png">
 </head>
 <body>
 
     <div id="desktop">
         <!-- Desktop Icons -->
-        <div class="desktop-icon" id="my-computer-icon" title="This PC" data-icon-url="https://img.icons8.com/color/48/windows-11.png"> <!-- data attribute for icon -->
+        <div class="desktop-icon" id="my-computer-icon" title="This PC" data-icon-url="https://img.icons8.com/color/48/windows-11.png">
              <img src="https://img.icons8.com/?size=100&id=gXoJoyTtYXFg&format=png&color=000000" alt="This PC">
             <span>This PC</span>
         </div>
@@ -32,11 +28,11 @@
 
         <!-- Container for Windows -->
         <div id="window-container">
-            
+             <!-- Windows dynamically added here -->
         </div>
     </div>
 
-    <!-- Start Menu (Initially Hidden) -->
+    <!-- Start Menu -->
     <div id="start-menu">
         <div class="start-search-box">
             <i class="fa-solid fa-search"></i>
@@ -48,39 +44,14 @@
                 <button class="all-apps-button">All apps <i class="fa-solid fa-chevron-right"></i></button>
             </div>
             <div class="start-app-grid">
-                <div class="start-app-icon" title="Edge">
-                    <img src="https://img.icons8.com/color/48/000000/ms-edge.png" alt="Edge"/>
-                    <span>Edge</span>
-                </div>
-                 <div class="start-app-icon" title="Word">
-                    <img src="https://img.icons8.com/color/48/000000/ms-word.png" alt="Word"/>
-                    <span>Word</span>
-                </div>
-                <div class="start-app-icon" title="Excel">
-                     <img src="https://img.icons8.com/color/48/000000/ms-excel.png" alt="Excel"/>
-                    <span>Excel</span>
-                </div>
-                <div class="start-app-icon" title="PowerPoint">
-                    <img src="https://img.icons8.com/color/48/000000/ms-powerpoint.png" alt="PowerPoint"/>
-                    <span>PowerPoint</span>
-                </div>
-                 <div class="start-app-icon" title="Settings">
-                    <img src="https://img.icons8.com/fluency/48/settings.png" alt="Settings"/>
-                    <span>Settings</span>
-                </div>
-                 <div class="start-app-icon" title="OneNote">
-                     <img src="https://img.icons8.com/?size=100&id=117560&format=png&color=000000" alt="OneNote"/>
-                    <span>OneNote</span>
-                 </div>
-                 <div class="start-app-icon" title="File Explorer">
-                     <img src="https://img.icons8.com/color/48/folder-invoices--v1.png" alt="File Explorer"/>
-                    <span>File Explorer</span>
-                 </div>
-                 <div class="start-app-icon" title="Notepad">
-                     <img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad"/>
-                    <span>Notepad</span>
-                 </div>
-                 <!-- Add more apps -->
+                <div class="start-app-icon" title="Edge"><img src="https://img.icons8.com/color/48/000000/ms-edge.png" alt="Edge"/><span>Edge</span></div>
+                 <div class="start-app-icon" title="Word"><img src="https://img.icons8.com/color/48/000000/ms-word.png" alt="Word"/><span>Word</span></div>
+                <div class="start-app-icon" title="Excel"><img src="https://img.icons8.com/color/48/000000/ms-excel.png" alt="Excel"/><span>Excel</span></div>
+                <div class="start-app-icon" title="PowerPoint"><img src="https://img.icons8.com/color/48/000000/ms-powerpoint.png" alt="PowerPoint"/><span>PowerPoint</span></div>
+                 <div class="start-app-icon" title="Settings"><img src="https://img.icons8.com/fluency/48/settings.png" alt="Settings"/><span>Settings</span></div>
+                 <div class="start-app-icon" title="OneNote"><img src="https://img.icons8.com/?size=100&id=117560&format=png&color=000000" alt="OneNote"/><span>OneNote</span></div>
+                 <div class="start-app-icon" title="File Explorer"><img src="https://img.icons8.com/color/48/folder-invoices--v1.png" alt="File Explorer"/><span>File Explorer</span></div>
+                 <div class="start-app-icon" title="Notepad"><img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad"/><span>Notepad</span></div>
             </div>
         </div>
          <div class="start-section recommended-section">
@@ -88,7 +59,6 @@
                 <span>Recommended</span>
                 <button class="more-button">More <i class="fa-solid fa-chevron-right"></i></button>
             </div>
-             <!-- Add recommended items here -->
              <div style="text-align: center; color: #666; padding: 20px;">No recommendations (yet)</div>
          </div>
          <div class="start-user-area">
@@ -100,7 +70,7 @@
          </div>
     </div>
 
-    <!-- System Tray Flyout (Initially Hidden) -->
+    <!-- System Tray Flyout -->
     <div id="tray-flyout">
          <div class="tray-grid">
             <div class="tray-icon" title="Bluetooth"><img src="https://img.icons8.com/fluency/30/bluetooth.png" alt="Bluetooth"/></div>
@@ -114,66 +84,43 @@
          </div>
     </div>
 
+    <!-- Taskbar -->
     <div id="taskbar">
-        <!-- CORRECTED STRUCTURE: Center and Right are siblings handled by flex -->
         <div class="taskbar-center">
              <div class="taskbar-icons">
-                 <div class="taskbar-icon" id="start-button" title="Start">
-                     <i class="fa-brands fa-windows"></i>
-                 </div>
-                 <div class="taskbar-icon" id="search-button" title="Search">
-                     <i class="fa-solid fa-search"></i>
-                 </div>
-                 <div class="taskbar-icon" id="taskview-button" title="Task View">
-                     <i class="fa-regular fa-object-group"></i> <!-- Example icon -->
-                 </div>
-                 <div class="taskbar-icon" id="widgets-button" title="Widgets">
-                     <i class="fa-solid fa-table-cells-large"></i> <!-- Example icon -->
-                 </div>
-                 <div class="taskbar-icon active" id="explorer-button" title="File Explorer">
-                      <img src="https://img.icons8.com/color/20/folder-invoices--v1.png" alt="Explorer"/>
-                 </div>
-                 <!-- Add more pinned app icons here -->
+                 <div class="taskbar-icon" id="start-button" title="Start"><i class="fa-brands fa-windows"></i></div>
+                 <div class="taskbar-icon" id="search-button" title="Search"><i class="fa-solid fa-search"></i></div>
+                 <div class="taskbar-icon" id="taskview-button" title="Task View"><i class="fa-regular fa-object-group"></i></div>
+                 <div class="taskbar-icon" id="widgets-button" title="Widgets"><i class="fa-solid fa-table-cells-large"></i></div>
+                 <div class="taskbar-icon active" id="explorer-button" title="File Explorer"><img src="https://img.icons8.com/color/20/folder-invoices--v1.png" alt="Explorer"/></div>
             </div>
-            <!-- Minimized Window Buttons Area (remains part of center block conceptually) -->
             <div id="minimized-windows">
                 <!-- Minimized buttons go here -->
             </div>
         </div>
 
         <div class="taskbar-right">
-            <div class="taskbar-icon" id="tray-arrow" title="Show hidden icons">
-                 <i class="fa-solid fa-chevron-up"></i>
-            </div>
-             <div class="taskbar-icon" title="Input Language">
-                 <span style="font-size: 11px; font-weight: 600;">ENG</span>
-            </div>
-            <div class="taskbar-icon" title="Network / Internet access">
-                 <i class="fa-solid fa-wifi"></i>
-            </div>
-            <div class="taskbar-icon" title="Speakers">
-                 <i class="fa-solid fa-volume-high"></i>
-            </div>
+            <div class="taskbar-icon" id="tray-arrow" title="Show hidden icons"><i class="fa-solid fa-chevron-up"></i></div>
+             <div class="taskbar-icon" title="Input Language"><span style="font-size: 11px; font-weight: 600;">ENG</span></div>
+            <div class="taskbar-icon" title="Network / Internet access"><i class="fa-solid fa-wifi"></i></div>
+            <div class="taskbar-icon" title="Speakers"><i class="fa-solid fa-volume-high"></i></div>
             <div id="clock-section">
                  <div id="clock-time">12:00 PM</div>
                  <div id="clock-date">1/1/2024</div>
             </div>
-            <div class="taskbar-icon" title="Notifications">
-                 <i class="fa-regular fa-bell"></i>
-            </div>
-            <div id="show-desktop-button"></div> <!-- Little sliver at the end -->
+            <div class="taskbar-icon" title="Notifications"><i class="fa-regular fa-bell"></i></div>
+            <div id="show-desktop-button"></div>
         </div>
     </div>
 
-    <!-- Window Template (Hidden) -->
+    <!-- Window Template -->
     <template id="window-template">
-        <div class="window" tabindex="0"> <!-- Add tabindex for focus -->
+        <div class="window" tabindex="0">
             <div class="window-titlebar">
                 <img src="" alt="icon" class="window-icon" width="16" height="16">
                 <span class="window-title">Window Title</span>
                 <div class="window-controls">
                     <button class="window-control win-minimize" title="Minimize"><i class="fa-solid fa-window-minimize"></i></button>
-                    <!-- Maximize/Restore icon will be changed via JS -->
                     <button class="window-control win-maximize-restore" title="Maximize"><i class="fa-regular fa-square"></i></button>
                     <button class="window-control win-close" title="Close"><i class="fa-solid fa-times"></i></button>
                 </div>
@@ -184,6 +131,47 @@
         </div>
     </template>
 
-    <script src="script.js"></script> <!-- Assume script.js is the enhanced one from previous step -->
+    <!-- Custom Context Menu -->
+    <div id="context-menu" role="menu">
+        <ul>
+            <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-table-cells-large"></i><span class="label">View</span>
+                <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+            </li>
+            <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-arrow-up-wide-short"></i><span class="label">Sort by</span>
+                <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+            </li>
+            <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-rotate-right"></i><span class="label">Refresh</span>
+            </li>
+            <li class="context-menu-separator" role="separator"></li>
+            <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-rotate-left"></i><span class="label">Undo Rename</span>
+                <span class="shortcut">Ctrl+Z</span>
+            </li>
+            <li class="context-menu-item" role="menuitem">
+               <i class="fa-regular fa-square-plus"></i><span class="label">New</span>
+               <i class="fa-solid fa-chevron-right submenu-arrow"></i>
+            </li>
+             <li class="context-menu-separator" role="separator"></li>
+             <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-display"></i><span class="label">Display settings</span>
+            </li>
+             <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-paintbrush"></i><span class="label">Personalize</span>
+            </li>
+             <li class="context-menu-separator" role="separator"></li>
+            <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-terminal"></i><span class="label">Open in Terminal</span>
+            </li>
+             <li class="context-menu-separator" role="separator"></li>
+             <li class="context-menu-item" role="menuitem">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i><span class="label">Show more options</span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
