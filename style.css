@@ -1,3 +1,19 @@
+:root {
+  --accent-color: #0078d4; /* Default accent color */
+  --base-background: #f3f3f3;
+  --window-background: #ffffff;
+  --window-inactive-border: #b0b0b0;
+  --window-active-border: #777;
+  --taskbar-background: rgba(243, 243, 243, 0.85);
+  --startmenu-background: rgba(245, 245, 245, 0.9);
+  --contextmenu-background: rgba(249, 249, 249, 0.9);
+  --highlight-background: rgba(0, 0, 0, 0.07);
+  --highlight-active-background: rgba(0, 0, 0, 0.1);
+  --text-color: #222;
+  --text-secondary-color: #444;
+  --text-light-color: #666;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,24 +26,22 @@ body {
   overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
-  background-color: #000;
+  background-color: #000; /* Fallback */
 }
 
 #desktop {
   position: relative;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 48px); 
   width: 100vw;
-  background-image: url("wallpaper.jpg");
+  background-image: url("wallpaper.jpg"); 
   background-size: cover;
-  background-position: center;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
+  background-position: bottom;
+  padding: 10px; 
+  overflow: hidden; 
 }
 
 .desktop-icon {
+  position: absolute; /* Allow precise placement */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,9 +51,19 @@ body {
   width: 90px;
   padding: 8px 5px;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: grab; /* Indicate draggable */
   user-select: none;
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.1s ease-in-out, border 0.1s ease-in-out, transform 0.1s ease-out;
+  border: 1px solid transparent; /* Add border for active state */
+  z-index: 5; /* Below windows */
+}
+.desktop-icon:active {
+    cursor: grabbing;
+    z-index: 6; /* Bring slightly forward when dragging */
+}
+.desktop-icon.dragging {
+    opacity: 0.7;
+    transform: scale(1.05);
 }
 
 .desktop-icon img {
@@ -47,21 +71,28 @@ body {
   height: 40px;
   margin-bottom: 5px;
   object-fit: contain;
+  -webkit-user-drag: none; /* Prevent browser default image dragging */
+  khtml-user-drag: none;
+  moz-user-drag: none;
+  o-user-drag: none;
+  user-drag: none;
 }
 
 .desktop-icon span {
   font-size: 12px;
   word-wrap: break-word;
   line-height: 1.3;
+  max-height: 2.6em; /* Limit to 2 lines */
+  overflow: hidden;
 }
 
 .desktop-icon:hover {
   background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
-.desktop-icon:active,
 .desktop-icon.active-select {
   background-color: rgba(100, 150, 255, 0.3);
-  border: 1px solid rgba(120, 170, 255, 0.4);
+  border: 1px solid rgba(120, 170, 255, 0.5);
 }
 
 #taskbar {
@@ -70,23 +101,23 @@ body {
   left: 0;
   width: 100%;
   height: 48px;
-  background-color: rgba(243, 243, 243, 0.85);
+  background-color: var(--taskbar-background);
   backdrop-filter: blur(20px) saturate(1.2);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   border-top: 1px solid rgba(150, 150, 150, 0.3);
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */ /* Removed for left/center/right structure */
   align-items: center;
   z-index: 1000;
-  position: relative;
+  padding: 0 5px; /* Padding for edge items */
 }
 
 .taskbar-center {
   display: flex;
   align-items: center;
   height: 100%;
-  margin: 0 auto;
-  transform: translateX(130px);
+  margin: 0 auto; 
+  transform: translateX(130px); 
 }
 
 .taskbar-icons {
@@ -95,7 +126,7 @@ body {
 }
 
 .taskbar-icon {
-  color: #333;
+  color: var(--text-color);
   font-size: 18px;
   padding: 0 12px;
   border-radius: 4px;
@@ -114,11 +145,11 @@ body {
 }
 
 .taskbar-icon:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--highlight-background);
 }
 .taskbar-icon:active,
 .taskbar-icon.active {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: var(--highlight-active-background);
 }
 .taskbar-icon.active::after,
 .minimized-btn.active::after {
@@ -128,9 +159,9 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 18px;
-  height: 2px;
-  background-color: #0078d4;
-  border-radius: 1px;
+  height: 3px; /* Slightly thicker */
+  background-color: var(--accent-color);
+  border-radius: 1.5px;
 }
 
 #minimized-windows {
@@ -144,7 +175,7 @@ body {
 .minimized-btn {
   background-color: transparent;
   border: none;
-  color: #333;
+  color: var(--text-color);
   font-size: 13px;
   padding: 0 10px;
   height: 38px;
@@ -165,17 +196,17 @@ body {
   height: 16px;
 }
 .minimized-btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--highlight-background);
 }
 
 .taskbar-right {
   display: flex;
   align-items: center;
-  gap: 5px;
-  color: #333;
+  gap: 2px; 
+  color: var(--text-color);
   font-size: 12px;
   height: 100%;
-  padding-right: 5px;
+  padding-right: 0px;
   /* margin-left: auto;  */
 }
 .taskbar-right .taskbar-icon {
@@ -194,10 +225,15 @@ body {
   font-size: 12px;
   line-height: 1.3;
   cursor: default;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+#clock-section:hover {
+    background-color: rgba(0, 0, 0, 0.08);
 }
 #clock-date {
   font-size: 11px;
-  color: #444;
+  color: var(--text-secondary-color);
 }
 
 #show-desktop-button {
@@ -207,6 +243,7 @@ body {
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   transition: background-color 0.2s ease;
   flex-shrink: 0;
+  margin-left: 3px; /* Small gap */
 }
 #show-desktop-button:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -217,33 +254,35 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% - 48px);
-  pointer-events: none;
+  /* height: calc(100% - 48px);  */
+  height: 100%;
+  pointer-events: none; 
+  overflow: hidden; 
 }
 
 .window {
   position: absolute;
-  background-color: #fdfdfd;
-  border: 1px solid #b0b0b0;
+  background-color: var(--window-background);
+  border: 1px solid var(--window-inactive-border);
   border-radius: 8px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
   min-width: 300px;
   min-height: 200px;
-  overflow: hidden;
+  overflow: hidden; /* Content scrolls, not window */
   display: flex;
   flex-direction: column;
-  z-index: 10;
-  pointer-events: auto;
+  z-index: 10; /* Default z-index */
+  pointer-events: auto; /* Windows are interactive */
   resize: both;
-  transition: opacity 0.15s ease-out, transform 0.15s ease-out,
-    width 0.2s ease-out, height 0.2s ease-out, top 0.2s ease-out,
-    left 0.2s ease-out;
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  /* Removed size/pos transition for smoother drag/snap */
+  /* width 0.2s ease-out, height 0.2s ease-out, top 0.2s ease-out, left 0.2s ease-out; */
   opacity: 1;
   max-width: 100vw;
   max-height: calc(100vh - 48px);
 }
 .window:focus-within {
-  border-color: #777;
+  border-color: var(--window-active-border);
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -251,35 +290,43 @@ body {
   opacity: 0;
   pointer-events: none;
   transform: translateY(50px) scale(0.9);
-  transition: opacity 0.2s ease-in, transform 0.2s ease-in;
+  transition: opacity 0.2s ease-in, transform 0.2s ease-in, z-index 0s 0.2s;
+  z-index: -1 !important; /* Ensure minimized windows are behind */
 }
 
 .window.maximized {
   top: 0 !important;
   left: 0 !important;
-  width: 100% !important;
-  height: calc(100vh - 48px) !important; /* Corrected maximized height */
+  width: 100% !important; /* Use window container size */
+  height: 100% !important; /* Use window container size */
   border-radius: 0;
   border: none;
   resize: none;
   transition: width 0.15s ease-out, height 0.15s ease-out, top 0.15s ease-out,
-    left 0.15s ease-out;
+    left 0.15s ease-out, border-radius 0.15s ease-out;
 }
 
 .window-titlebar {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* Slightly different from base */
   padding: 0 0 0 10px;
   height: 32px;
   display: flex;
   align-items: center;
-  cursor: move;
+  cursor: grab;
   user-select: none;
   border-bottom: 1px solid #e0e0e0;
   border-radius: 8px 8px 0 0;
   flex-shrink: 0;
 }
+.window:focus-within .window-titlebar {
+    background-color: #e8e8e8; /* Slightly darker when active */
+}
 .window.maximized .window-titlebar {
   border-radius: 0;
+  cursor: default; /* No dragging when maximized */
+}
+.window-titlebar:active {
+    cursor: grabbing;
 }
 
 .window-icon {
@@ -292,7 +339,7 @@ body {
   flex-grow: 1;
   font-weight: normal;
   font-size: 13px;
-  color: #222;
+  color: var(--text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -311,7 +358,7 @@ body {
   cursor: pointer;
   height: 32px;
   line-height: 32px;
-  color: #444;
+  color: var(--text-secondary-color);
   transition: background-color 0.15s ease;
 }
 .window-control i {
@@ -327,34 +374,48 @@ body {
   color: white;
 }
 
-.fa-window-restore {
+.fa-window-restore { /* Correct selector for icon itself */
   font-family: "Font Awesome 6 Free";
   font-weight: 400;
-  content: "\f2d2";
-  font-size: 10px;
+  font-style: normal; /* Override italics if needed */
+  content: "\f2d2"; /* Ensure this is the correct unicode */
+  font-size: 10px; /* Match other icons */
 }
-.window.maximized .win-maximize-restore i {
-  font-family: "Font Awesome 6 Free";
-  font-weight: 400;
-  content: "\f2d2";
-  font-size: 10px;
+
+/* Specific class for restore icon state (add this class via JS) */
+.window-control .fa-restore-icon {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 400;
+    font-style: normal;
+    content: "\f2d2"; /* Restore icon */
+    font-size: 10px;
 }
+/* Default state (square) */
+.window-control .fa-maximize-icon {
+    font-family: "Font Awesome 6 Regular"; /* Use Regular for square */
+    font-weight: 400;
+    font-style: normal;
+    content: "\f2d0"; /* Maximize icon (square) */
+    font-size: 10px;
+}
+
 
 .window-content {
   flex-grow: 1;
   padding: 0;
-  overflow: auto;
-  background-color: #ffffff;
-  overflow-y: hidden;
+  overflow: auto; /* Allows content scrolling */
+  background-color: var(--window-background);
+  /* overflow-y: hidden; */ /* Removed to allow vertical scroll if needed */
 }
 
+/* --- File Explorer Styles --- */
 .file-explorer-content {
   display: flex;
   height: 100%;
 }
 .fe-sidebar {
-  width: 180px;
-  background-color: #f3f3f3;
+  width: 200px; /* Slightly wider */
+  background-color: var(--base-background);
   padding: 10px;
   border-right: 1px solid #e0e0e0;
   flex-shrink: 0;
@@ -362,10 +423,11 @@ body {
 }
 .fe-sidebar h4 {
   font-size: 11px;
-  color: #666;
+  color: var(--text-light-color);
   margin-top: 15px;
   margin-bottom: 5px;
   text-transform: uppercase;
+  padding-left: 8px;
 }
 .fe-sidebar h4:first-child {
   margin-top: 0;
@@ -385,7 +447,7 @@ body {
   gap: 8px;
 }
 .fe-sidebar li i {
-  color: #555;
+  color: var(--text-secondary-color);
   font-size: 16px;
   width: 20px;
   text-align: center;
@@ -394,7 +456,11 @@ body {
   background-color: #e1e1e1;
 }
 .fe-sidebar li.active {
-  background-color: #c7e0f4;
+  background-color: #cce3f9; /* Lighter blue */
+  color: var(--accent-color);
+}
+.fe-sidebar li.active i {
+    color: var(--accent-color);
 }
 .fe-main {
   flex-grow: 1;
@@ -404,7 +470,7 @@ body {
 .fe-section-title {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 10px;
   padding-bottom: 5px;
   border-bottom: 1px solid #eee;
@@ -422,6 +488,7 @@ body {
   padding: 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 .fe-item:hover {
   background-color: #e9f5ff;
@@ -432,7 +499,7 @@ body {
   width: 32px;
   height: 32px;
   margin-bottom: 8px;
-  color: #4178be;
+  color: #4178be; /* Default folder/item color */
   object-fit: contain;
 }
 .fe-item i.fa-hard-drive {
@@ -443,6 +510,7 @@ body {
   word-break: break-word;
 }
 
+/* --- Start Menu --- */
 #start-menu {
   position: absolute;
   bottom: 55px;
@@ -450,7 +518,7 @@ body {
   transform: translateX(-50%);
   width: 580px;
   max-height: 650px;
-  background-color: rgba(245, 245, 245, 0.9);
+  background-color: var(--startmenu-background);
   backdrop-filter: blur(25px) saturate(1.3);
   -webkit-backdrop-filter: blur(25px) saturate(1.3);
   border-radius: 8px;
@@ -462,14 +530,14 @@ body {
   opacity: 0;
   visibility: hidden;
   transform: translateX(-50%) translateY(20px);
-  transition: opacity 0.2s ease-out, visibility 0.2s ease-out,
-    transform 0.2s ease-out;
+  transition: opacity 0.2s ease-out, visibility 0s 0.2s, transform 0.2s ease-out;
 }
 
 #start-menu.active {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
+  transition: opacity 0.2s ease-out, visibility 0s 0s, transform 0.2s ease-out;
 }
 
 .start-search-box {
@@ -480,7 +548,7 @@ body {
   background-color: rgba(255, 255, 255, 0.5);
 }
 .start-search-box i {
-  color: #555;
+  color: var(--text-secondary-color);
   margin-right: 10px;
 }
 .start-search-box input {
@@ -526,7 +594,7 @@ body {
 .start-app-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 15px;
+  gap: 10px; /* Reduced gap */
 }
 
 .start-app-icon {
@@ -538,9 +606,20 @@ body {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.15s ease;
+  visibility: visible; /* Default */
+  opacity: 1;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+.start-app-icon.hidden {
+    opacity: 0;
+    visibility: hidden;
+    height: 0; /* Collapse space */
+    padding: 0;
+    margin: 0;
+    overflow: hidden; /* Hide content */
 }
 .start-app-icon:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: var(--highlight-background);
 }
 .start-app-icon img {
   width: 32px;
@@ -607,10 +686,11 @@ body {
   background-color: rgba(0, 0, 0, 0.08);
 }
 
+/* --- Tray Flyout --- */
 #tray-flyout {
   position: absolute;
   bottom: 55px;
-  right: 145px; 
+  right: 130px !important; 
   width: auto;
   min-width: 200px;
   padding: 10px;
@@ -623,19 +703,19 @@ body {
   opacity: 0;
   visibility: hidden;
   transform: translateY(15px);
-  transition: opacity 0.15s ease-out, visibility 0.15s ease-out,
-    transform 0.15s ease-out;
+  transition: opacity 0.15s ease-out, visibility 0s 0.15s, transform 0.15s ease-out;
 }
 
 #tray-flyout.active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  transition: opacity 0.15s ease-out, visibility 0s 0s, transform 0.15s ease-out;
 }
 
 .tray-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* More flexible */
   gap: 8px;
 }
 
@@ -650,7 +730,7 @@ body {
   transition: background-color 0.15s ease;
 }
 .tray-icon:hover {
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: var(--highlight-background);
 }
 .tray-icon img {
   width: 24px;
@@ -658,6 +738,7 @@ body {
   object-fit: contain;
 }
 
+/* --- Notepad Styles --- */
 .notepad-content {
   width: 100%;
   height: 100%;
@@ -668,13 +749,191 @@ body {
   font-size: 14px;
   line-height: 1.4;
   resize: none;
+  background-color: var(--window-background); /* Inherit window background */
+  color: var(--text-color);
 }
 
+/* --- Calculator Styles --- */
+.calculator-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #e9e9e9; /* Calculator background */
+    padding: 10px;
+}
+.calc-display {
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: right;
+    font-size: 2em;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Prevent overflow */
+    min-height: 1.5em; /* Ensure minimum height */
+}
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    flex-grow: 1;
+}
+.calc-buttons button {
+    padding: 15px 10px; /* Adjusted padding */
+    font-size: 1.2em;
+    border: none;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+.calc-buttons button:hover {
+    background-color: #f0f0f0;
+}
+.calc-buttons button:active {
+    background-color: #e0e0e0;
+}
+.calc-buttons button.operator {
+    background-color: #f0f0f0;
+}
+.calc-buttons button.equals {
+    background-color: var(--accent-color);
+    color: white;
+    grid-column: span 2; /* Make equals wider */
+}
+.calc-buttons button.equals:hover {
+    filter: brightness(0.9);
+}
+
+/* --- Settings App Styles --- */
+.settings-content {
+    display: flex;
+    height: 100%;
+    background-color: var(--window-background);
+}
+.settings-sidebar {
+    width: 200px;
+    background-color: #f7f7f7; /* Lighter sidebar */
+    padding: 15px 0;
+    border-right: 1px solid #e8e8e8;
+    flex-shrink: 0;
+}
+.settings-sidebar ul {
+    list-style: none;
+}
+.settings-sidebar li {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.settings-sidebar li i {
+    width: 18px;
+    text-align: center;
+    color: var(--text-secondary-color);
+}
+.settings-sidebar li:hover {
+    background-color: #efefef;
+}
+.settings-sidebar li.active {
+    background-color: #e8f0f7;
+    border-left-color: var(--accent-color);
+    font-weight: 600;
+}
+.settings-main {
+    flex-grow: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+.settings-section {
+    margin-bottom: 30px;
+}
+.settings-section h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.settings-option {
+    margin-bottom: 15px;
+}
+.settings-option label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 13px;
+}
+.settings-option input[type="text"],
+.settings-option input[type="color"],
+.settings-option select {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 250px;
+    font-size: 13px;
+}
+.settings-option input[type="color"] {
+    padding: 2px; /* Less padding for color input */
+    height: 36px;
+    width: 50px;
+    min-width: auto;
+    vertical-align: middle;
+}
+.wallpaper-previews {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.wallpaper-preview {
+    width: 100px;
+    height: 60px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+.wallpaper-preview.selected {
+    border-color: var(--accent-color);
+}
+.color-swatches {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+.color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #fff;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    transition: transform 0.1s ease;
+}
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+.color-swatch.selected {
+     border-color: var(--accent-color); /* Or use outline */
+     box-shadow: 0 0 5px var(--accent-color);
+}
+
+
+/* --- Context Menu --- */
 #context-menu {
   position: absolute;
   z-index: 2000;
   width: 280px;
-  background-color: rgba(249, 249, 249, 0.85);
+  background-color: var(--contextmenu-background);
   backdrop-filter: blur(25px) saturate(1.5);
   -webkit-backdrop-filter: blur(25px) saturate(1.5);
   border-radius: 8px;
@@ -699,16 +958,25 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-size: 13px;
-  color: #222;
+  color: var(--text-color);
   transition: background-color 0.1s ease-in-out;
   white-space: nowrap;
+  position: relative; /* Needed for submenu positioning */
 }
 
 .context-menu-item:hover {
-  background-color: rgba(0, 0, 0, 0.07);
+  background-color: var(--highlight-background);
 }
-.context-menu-item:active {
-  background-color: rgba(0, 0, 0, 0.1);
+.context-menu-item.disabled {
+    color: #aaa;
+    cursor: default;
+    background-color: transparent !important;
+}
+.context-menu-item.disabled:hover {
+     background-color: transparent;
+}
+.context-menu-item:active:not(.disabled) {
+  background-color: var(--highlight-active-background);
 }
 
 .context-menu-item i:first-child {
@@ -716,7 +984,7 @@ body {
   text-align: center;
   margin-right: 10px;
   font-size: 14px;
-  color: #333;
+  color: var(--text-secondary-color);
   line-height: 1;
 }
 
@@ -727,14 +995,14 @@ body {
 .context-menu-item .shortcut {
   margin-left: auto;
   font-size: 11px;
-  color: #555;
+  color: var(--text-light-color);
   padding-left: 20px;
 }
 
 .context-menu-item .submenu-arrow {
   margin-left: auto;
   font-size: 9px;
-  color: #444;
+  color: var(--text-secondary-color);
   padding-left: 15px;
 }
 
@@ -742,13 +1010,225 @@ body {
   height: 1px;
   background-color: rgba(0, 0, 0, 0.12);
   margin: 5px 0px;
+  padding: 0 !important; /* Override item padding */
 }
 
-.context-menu-item:nth-child(3) .submenu-arrow,
-.context-menu-item:nth-child(5) .submenu-arrow,
-.context-menu-item:nth-child(8) .submenu-arrow,
-.context-menu-item:nth-child(9) .submenu-arrow,
-.context-menu-item:nth-child(11) .submenu-arrow,
-.context-menu-item:nth-child(13) .submenu-arrow {
+/* --- Context Submenu --- */
+.context-submenu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    left: 100%; /* Position to the right of the parent */
+    top: -7px; /* Align top edge (adjust for padding) */
+    min-width: 200px;
+    background-color: var(--contextmenu-background);
+    backdrop-filter: blur(25px) saturate(1.5);
+    -webkit-backdrop-filter: blur(25px) saturate(1.5);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    padding: 6px;
+    border: 1px solid rgba(180, 180, 180, 0.4);
+    z-index: 2010; /* Above main menu */
+}
+.context-menu-item:hover > .context-submenu {
+    display: block; /* Show on hover */
+}
+.context-submenu li {
+    display: flex;
+    align-items: center;
+    padding: 7px 12px;
+    margin: 1px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-color);
+    transition: background-color 0.1s ease-in-out;
+    white-space: nowrap;
+}
+.context-submenu li:hover {
+    background-color: var(--highlight-background);
+}
+.context-submenu li i {
+    width: 28px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 14px;
+    color: var(--text-secondary-color);
+    line-height: 1;
+}
+.context-submenu .context-menu-separator {
+    margin: 5px 0; /* Adjust margin */
+}
+
+/* --- Window Snapping Hint --- */
+#snap-hint {
+    position: absolute;
+    background-color: rgba(0, 120, 212, 0.3); /* Semi-transparent blue */
+    border: 2px solid rgba(0, 120, 212, 0.6);
+    border-radius: 4px;
+    z-index: 900; /* Below windows being dragged */
+    display: none; /* Hidden by default */
+    transition: all 0.1s ease-out;
+    pointer-events: none;
+}
+
+/* --- Loading Indicator --- */
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    z-index: 5000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.1s ease-out;
+}
+#loading-indicator.visible {
+    opacity: 1;
+    transition: opacity 0.05s ease-in;
+}
+
+/* --- Widgets Panel --- */
+#widgets-panel {
+  position: absolute;
+  bottom: 55px;
+  left: 10px; /* Position near the widget button */
+  width: 360px;
+  max-height: calc(100vh - 70px);
+  background-color: var(--startmenu-background); /* Reuse start menu style */
+  backdrop-filter: blur(25px) saturate(1.3);
+  -webkit-backdrop-filter: blur(25px) saturate(1.3);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  z-index: 980; /* Below start menu */
+  overflow-y: auto;
+  padding: 20px;
+  opacity: 0;
   visibility: hidden;
+  transform: translateX(-20px);
+  transition: opacity 0.2s ease-out, visibility 0s 0.2s, transform 0.2s ease-out;
+}
+#widgets-panel.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  transition: opacity 0.2s ease-out, visibility 0s 0s, transform 0.2s ease-out;
+}
+.widget {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.widget h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-secondary-color);
+}
+.widget ul {
+    list-style: disc;
+    padding-left: 20px;
+    font-size: 13px;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* --- Task View --- */
+#task-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 48px); /* Fill desktop area */
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1500; /* High z-index */
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    padding: 40px;
+    overflow-y: auto;
+}
+#task-view.active {
+    display: block;
+    opacity: 1;
+}
+#task-view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+.task-view-thumbnail {
+    background-color: var(--window-background);
+    border: 1px solid var(--window-inactive-border);
+    border-radius: 6px;
+    aspect-ratio: 16 / 10; /* Maintain aspect ratio */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.task-view-thumbnail:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    border-color: var(--accent-color);
+}
+.task-view-titlebar {
+    background-color: #f0f0f0;
+    padding: 5px 8px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.task-view-titlebar img {
+    width: 14px;
+    height: 14px;
+}
+.task-view-titlebar span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+}
+.task-view-content-preview {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    color: #ccc;
+    background: repeating-linear-gradient(
+      45deg,
+      #f8f8f8,
+      #f8f8f8 10px,
+      #ffffff 10px,
+      #ffffff 20px
+    );
+}
+#close-task-view {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+}
+#close-task-view:hover {
+    background: rgba(0,0,0,0.7);
 }
