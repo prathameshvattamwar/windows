@@ -531,6 +531,7 @@ body {
   visibility: hidden;
   transform: translateX(-50%) translateY(20px);
   transition: opacity 0.2s ease-out, visibility 0s 0.2s, transform 0.2s ease-out;
+  pointer-events: none;
 }
 
 #start-menu.active {
@@ -538,6 +539,7 @@ body {
   visibility: visible;
   transform: translateX(-50%) translateY(0);
   transition: opacity 0.2s ease-out, visibility 0s 0s, transform 0.2s ease-out;
+  pointer-events: auto;
 }
 
 .start-search-box {
